@@ -2,9 +2,12 @@ from django.shortcuts import render
 #from django.http import HttpResponse
 
 
+from .models import Material
 
-materials = [{"id":1, "name":"caneta bic"}
-            ]
+# materials = [{"id":1, "name":"caneta bic"},
+#              {"id":2, "name":"folha A4"},
+#              {"id":3, "name":"Toner HP"}
+#             ]
 
 # Create your views here.
 def home(request):
@@ -15,10 +18,13 @@ def report (request):
 
 
 def material(request):
-    context={"materials": materials}
+    materials= Material.objects.all()
+    context={"materials":materials}
     return render(request,"base/material.html", context)
 
 def material_item(request, pk):
-
-    return render(request,"base/material.html")
+    material= Material.objects.get(id=pk)
+    context={"material":material}
+    
+    return render(request,"base/material_item.html", context)
 
