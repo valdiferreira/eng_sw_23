@@ -1,0 +1,16 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> material </h1>
+
+<div>
+    {%for material in materials%}
+        <div>
+        <a href="/material/{{material.id}}">{{material.id}}-- {{material.name}}</a>
+        </div>
+    {%endfor%}
+
+</div>
+
+{%endblock content%}
