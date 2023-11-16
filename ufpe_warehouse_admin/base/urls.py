@@ -17,4 +17,5 @@ urlpatterns = [
     path("material/", views.material, name="material"),
     path("local_stores/", views.local_stores, name="local_stores"),
     path("cadastrar-material", views.create_material, name="create_material"),
+    path("atualizar-material/<str:pk>/", views.update_material, name="update_material"),
 ]

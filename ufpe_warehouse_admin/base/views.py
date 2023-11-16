@@ -40,5 +40,9 @@ def create_material (request):
         
     context={"form":form}
     return render (request, "base/material_form.html", context)
-    
 
+def update_material(request, pk):
+    material= Material.objects.get(id=pk)
+    form = MaterialForm(instance=material)
+    context = {'form': form}
+    return render(request, "base/material_form.html", context)
