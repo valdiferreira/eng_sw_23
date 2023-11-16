@@ -1,20 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 #from django.http import HttpResponse
 
 
 from .models import Material
+from .models import LocalStore
+from .forms import MaterialForm
 
-# materials = [{"id":1, "name":"caneta bic"},
-#              {"id":2, "name":"folha A4"},
-#              {"id":3, "name":"Toner HP"}
-#             ]
-
-# Create your views here.
 def home(request):
     return render(request,"base/home.html")
 
 def report (request):
-    return render(request,).h
+    return render(request)
+
+def local_stores (request):
+    local_stores= LocalStore.objects.all()
+    context={"local_stores":local_stores}
+    return render(request,"base/local_stores.html", context)
 
 
 def material(request):
@@ -27,4 +28,17 @@ def material_item(request, pk):
     context={"material":material}
     
     return render(request,"base/material_item.html", context)
+
+def create_material (request):
+    form = MaterialForm()
+    if request.method == "POST":
+        form = MaterialForm(request.POST)
+        if form.is_valid():
+            # print (request.POST)
+            form.save()
+            return redirect("material")
+        
+    context={"form":form}
+    return render (request, "base/material_form.html", context)
+    
 

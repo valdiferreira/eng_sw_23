@@ -1,0 +1,23 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> Locais de Armazenamento </h1>
+
+<div>
+    {%for local in local_stores%}
+        <h2>
+        {{local.sector}}
+        
+        </h2>
+        <h3>
+        Sala: {{local.sala}}
+        </h3>
+        <h4>
+        {{local.sector.user_manager}}
+        </h4>
+    {%endfor%}
+
+</div>
+
+{%endblock content%}

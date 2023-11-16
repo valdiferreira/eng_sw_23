@@ -12,6 +12,10 @@ class Material (models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        ordering = ["name"]
+        
+    
     def __str__(self):
         return self.name
 
@@ -29,7 +33,7 @@ class Supplier (models.Model):
 class Sector (models.Model):
     
     name = models.CharField(unique=True, max_length=100, null=False)
-    sigla = models.CharField(unique=False, max_length=10, null=True)
+    sigla = models.CharField(unique=False, max_length=20, null=True)
     description = models.TextField(unique=False, null=True)
     user_manager = models.ForeignKey(User, on_delete=models.RESTRICT)
       
@@ -53,7 +57,7 @@ class LocalStore (models.Model):
         return self.sala
     
 class Moviment (models.Model):
-    status_choices = ["entrada","saída"]
+    status_choices = [(1,"entrada"),(2,"saída")]
 
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     sector = models.ForeignKey(Sector, on_delete=models.RESTRICT)
@@ -61,7 +65,8 @@ class Moviment (models.Model):
     local_store = models.ForeignKey(LocalStore, on_delete=models.RESTRICT)
     material = models.ForeignKey(Material, on_delete=models.RESTRICT)
     
-    status = models.CharField(unique=False, max_length=10, null=False, choices=status_choices)
+    status = models.CharField(unique=False, max_length=10, null=False
+                              , choices=status_choices)
     quantity = models.IntegerField(null=False, blank=False)
     
     updated = models.DateTimeField(auto_now=True)

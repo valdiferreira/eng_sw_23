@@ -14,6 +14,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("relatorio/", views.report, name="relatório"),
     path("material/<str:pk>/", views.material_item, name="material_item"),
-    path("material/", views.material, name="material")
-
+    path("material/", views.material, name="material"),
+    path("local_stores/", views.local_stores, name="local_stores"),
+    path("cadastrar-material", views.create_material, name="create_material"),
 ]
