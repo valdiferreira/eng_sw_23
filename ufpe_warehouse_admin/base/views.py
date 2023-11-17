@@ -44,5 +44,11 @@ def create_material (request):
 def update_material(request, pk):
     material= Material.objects.get(id=pk)
     form = MaterialForm(instance=material)
+    
+    if request.method == "POST":
+        form = MaterialForm(request.POST, instance=material)
+        if form .is_valid():
+            form.save()
+            return redirect("material")
     context = {'form': form}
     return render(request, "base/material_form.html", context)
