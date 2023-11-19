@@ -3,7 +3,12 @@
 {%block content%}
 
 <h1> material </h1>
-
+<div>
+    <form method = "GET" action = "/material/">
+    <input type="text" name="q" placeholder="Busca de Material..."/>
+    </br>
+    <a href="{% url 'material' %}"> Mostrar Todos </a>
+</div>
 <a href="{% url 'create_material' %}"> Cadastrar Material </a>
 
 <div>

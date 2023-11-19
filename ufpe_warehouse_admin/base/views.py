@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 #from django.http import HttpResponse
 
 
@@ -19,7 +20,11 @@ def local_stores (request):
 
 
 def material(request):
-    materials= Material.objects.all()
+    q=request.GET.get("q") if request.GET.get("q") != None else ''
+    materials= Material.objects.filter(
+        Q(name__contains=q) |
+        Q(description__contains=q))
+    #materials= Material.objects.all()
     context={"materials":materials}
     return render(request,"base/material.html", context)
 
