@@ -52,3 +52,13 @@ def update_material(request, pk):
             return redirect("material")
     context = {'form': form}
     return render(request, "base/material_form.html", context)
+
+def delete_material(request, pk):
+    material= Material.objects.get(id=pk)
+    context = {'obj': material}
+    if request.method=="POST":
+        material.delete()
+        return redirect("material")
+    return render(request, "base/material_delete.html", context)
+
+
