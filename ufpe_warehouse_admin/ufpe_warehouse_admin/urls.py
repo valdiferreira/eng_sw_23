@@ -24,3 +24,4 @@ urlpatterns = [
     path("", include ("base.urls"))
 
 ]
+handler404 = 'base.views.view_404'

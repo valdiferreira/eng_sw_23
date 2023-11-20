@@ -105,3 +105,5 @@ def delete_material(request, pk):
     return render(request, "base/material_delete.html", context)
 
 
+def view_404(request, exception):
+    return render(request, 'base/404.html', status=404)

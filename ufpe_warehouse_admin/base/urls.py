@@ -22,3 +22,4 @@ urlpatterns = [
     path("atualizar-material/<str:pk>/", views.update_material, name="update_material"),
     path("remover-material/<str:pk>/", views.delete_material, name="delete_material"),
 ]
+
