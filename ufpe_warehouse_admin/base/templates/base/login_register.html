@@ -1,0 +1,29 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> Locais de Armazenamento </h1>
+
+    <form method = "POST" action = "">
+        {% csrf_token %}
+        <label>Usuário:</label>
+        <input type="text" name="username" placeholder="Login Usuário" />
+
+        <label>Senha:</label>
+        <input type="password"  name="password" placeholder="Digite sua senha" />
+        
+        <input type="Submit" value= "Login" />
+        
+    </form>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</div>
+
+{%endblock content%}

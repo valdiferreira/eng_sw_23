@@ -11,6 +11,7 @@ from . import views
 
 
 urlpatterns = [
+    path ("login/", views.login_page,name="login"),
     path("", views.home, name="home"),
     path("relatorio/", views.report, name="relatório"),
     path("material/<str:pk>/", views.material_item, name="material_item"),

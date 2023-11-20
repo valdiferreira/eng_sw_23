@@ -1,11 +1,36 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from djnago.contrib import messages
+from djnago.contrib.auth import authenticate, login, logout
 #from django.http import HttpResponse
 
 
 from .models import Material
 from .models import LocalStore
 from .forms import MaterialForm
+from django.contrib.auth.models import User
+
+
+
+def login_page(request):
+    
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, "Usuário não encontrado")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "Usuário ou senha não encontrado")
+            
+        
+    context={}
+    return render(request, "base/login_register", context)
 
 def home(request):
     return render(request,"base/home.html")
