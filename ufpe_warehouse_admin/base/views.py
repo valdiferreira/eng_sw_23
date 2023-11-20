@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from djnago.contrib import messages
-from djnago.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 #from django.http import HttpResponse
 
 
@@ -30,20 +32,27 @@ def login_page(request):
             
         
     context={}
-    return render(request, "base/login_register", context)
+    return render(request, "base/login_register.html", context)
 
+@login_required(login_url="login")
+def logout_user(request):
+    logout(request)
+    return redirect ("login")
+
+@login_required(login_url="login")
 def home(request):
     return render(request,"base/home.html")
 
 def report (request):
     return render(request)
 
+@login_required(login_url="login")
 def local_stores (request):
     local_stores= LocalStore.objects.all()
     context={"local_stores":local_stores}
     return render(request,"base/local_stores.html", context)
 
-
+@login_required(login_url="login")
 def material(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     materials= Material.objects.filter(
@@ -53,12 +62,14 @@ def material(request):
     context={"materials":materials}
     return render(request,"base/material.html", context)
 
+@login_required(login_url="login")
 def material_item(request, pk):
     material= Material.objects.get(id=pk)
     context={"material":material}
     
     return render(request,"base/material_item.html", context)
 
+@login_required(login_url="login")
 def create_material (request):
     form = MaterialForm()
     if request.method == "POST":
@@ -71,6 +82,7 @@ def create_material (request):
     context={"form":form}
     return render (request, "base/material_form.html", context)
 
+@login_required(login_url="login")
 def update_material(request, pk):
     material= Material.objects.get(id=pk)
     form = MaterialForm(instance=material)
@@ -83,6 +95,7 @@ def update_material(request, pk):
     context = {'form': form}
     return render(request, "base/material_form.html", context)
 
+@login_required(login_url="login")
 def delete_material(request, pk):
     material= Material.objects.get(id=pk)
     context = {'obj': material}
