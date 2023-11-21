@@ -2,21 +2,21 @@
 
 {%block content%}
 
-<h1> material </h1>
+<h1> Fornecedor </h1>
 <div>
-    <form method = "GET" action = "/material/">
-    <input type="text" name="q" placeholder="Busca de Material..."/>
+    <form method = "GET" action = "/supplier/">
+    <input type="text" name="q" placeholder="Busca de Fornecedor..."/>
     </br>
-    <a href="{% url 'material' %}"> Mostrar Todos </a>
+    <a href="{% url 'supplier' %}"> Mostrar Todos </a>
 </div>
-<a href="{% url 'create_material' %}"> Cadastrar Material </a>
+<a href="{% url 'create_supplier' %}"> Cadastrar Fornecedor  </a>
 
 <div>
-    {%for material in materials%}
+    {%for supplier in suppliers%}
         <div>
-        <a href="/material/{{material.id}}">{{material.id}}-- {{material.name}}</a>
-        <a href="/atualizar-material/{{material.id}}">Edit</a>
-        <a href="/remover-material/{{material.id}}">Delete</a>
+        <a href="/supplier/{{supplier.id}}">{{supplier.id}}-- {{supplier.name}}</a>
+        <a href="/atualizar-supplier/{{supplier.id}}">Edit</a>
+        <a href="/remover-supplier/{{supplier.id}}">Delete</a>
         </div>
     {%endfor%}
 
