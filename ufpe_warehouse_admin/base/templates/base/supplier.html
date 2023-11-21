@@ -1,0 +1,25 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> material </h1>
+<div>
+    <form method = "GET" action = "/material/">
+    <input type="text" name="q" placeholder="Busca de Material..."/>
+    </br>
+    <a href="{% url 'material' %}"> Mostrar Todos </a>
+</div>
+<a href="{% url 'create_material' %}"> Cadastrar Material </a>
+
+<div>
+    {%for material in materials%}
+        <div>
+        <a href="/material/{{material.id}}">{{material.id}}-- {{material.name}}</a>
+        <a href="/atualizar-material/{{material.id}}">Edit</a>
+        <a href="/remover-material/{{material.id}}">Delete</a>
+        </div>
+    {%endfor%}
+
+</div>
+
+{%endblock content%}

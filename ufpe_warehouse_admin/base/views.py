@@ -8,13 +8,18 @@ from django.contrib.auth.decorators import login_required
 
 
 from .models import Material
+from .models import Supplier
 from .models import LocalStore
 from .forms import MaterialForm
+from .forms import  SupplierForm
 from django.contrib.auth.models import User
 
 
 
 def login_page(request):
+    
+    if request.user.is_authenticated:
+        return redirect("home")
     
     if request.method == "POST":
         username = request.POST.get("username")
@@ -103,6 +108,63 @@ def delete_material(request, pk):
         material.delete()
         return redirect("material")
     return render(request, "base/material_delete.html", context)
+
+@login_required(login_url="login")
+def supplier(request):
+    q=request.GET.get("q") if request.GET.get("q") != None else ''
+    suppliers= Supplier.objects.filter(
+        Q(name__contains=q) |
+        Q(description__contains=q))
+    #materials= Material.objects.all()
+    context={"suppliers":suppliers}
+    return render(request,"base/supplier.html", context)
+
+@login_required(login_url="login")
+def supplier_item(request, pk):
+    supplier= Supplier.objects.get(id=pk)
+    context={"supplier":supplier}
+    
+    return render(request,"base/supplier_item.html", context)
+
+@login_required(login_url="login")
+def create_supplier(request):
+    form = SupplierForm()
+    if request.method == "POST":
+        form = SupplierForm(request.POST)
+        if form.is_valid():
+            # print (request.POST)
+            form.save()
+            return redirect("supplier")
+        
+    context={"form":form}
+    return render (request, "base/supplier_form.html", context)
+
+@login_required(login_url="login")
+def update_supplier(request, pk):
+    supplier= Supplier.objects.get(id=pk)
+    form = SupplierForm(instance=material)
+    
+    if request.method == "POST":
+        form = SupplierForm(request.POST, instance=supplier)
+        if form .is_valid():
+            form.save()
+            return redirect("supplier")
+    context = {'form': form}
+    return render(request, "base/supplier_form.html", context)
+
+@login_required(login_url="login")
+def delete_supplier(request, pk):
+    supplier= Supplier.objects.get(id=pk)
+    context = {'obj': material}
+    if request.method=="POST":
+        supplier.delete()
+        return redirect("supplier")
+    return render(request, "base/supplier_delete.html", context)
+
+
+
+
+
 
 
 def view_404(request, exception):
