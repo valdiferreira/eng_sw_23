@@ -166,9 +166,9 @@ def delete_supplier(request, pk):
 def local(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     locales= LocalStore.objects.filter(
-        Q(name__contains=q) |
-        Q(description__contains=q))
-    #materials= Material.objects.all()
+        Q(sala__contains=q) |
+        Q(section__contains=q))
+    locales= LocalStore.objects.all()
     context={"locales":locales}
     return render(request,"base/local.html", context)
 

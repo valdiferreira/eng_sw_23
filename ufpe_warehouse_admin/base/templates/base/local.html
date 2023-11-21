@@ -1,0 +1,25 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> Local de Armazenamento </h1>
+<div>
+    <form method = "GET" action = "/material/">
+    <input type="text" name="q" placeholder="Busca de Locais..."/>
+    </br>
+    <a href="{% url 'material' %}"> Mostrar Todos </a>
+</div>
+<a href="{% url 'create_material' %}"> Cadastrar Local </a>
+
+<div>
+    {%for local in locales%}
+        <div>
+        <a href="/material/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a>
+        <a href="/atualizar-local/{{local.id}}">Edit</a>
+        <a href="/remover-local/{{local.id}}">Delete</a>
+        </div>
+    {%endfor%}
+
+</div>
+
+{%endblock content%}
