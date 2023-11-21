@@ -12,6 +12,7 @@ from .models import Supplier
 from .models import LocalStore
 from .forms import MaterialForm
 from .forms import  SupplierForm
+from .forms import  LocalForm
 from django.contrib.auth.models import User
 
 
@@ -160,6 +161,60 @@ def delete_supplier(request, pk):
         supplier.delete()
         return redirect("supplier")
     return render(request, "base/supplier_delete.html", context)
+
+@login_required(login_url="login")
+def local(request):
+    q=request.GET.get("q") if request.GET.get("q") != None else ''
+    locales= LocalStore.objects.filter(
+        Q(name__contains=q) |
+        Q(description__contains=q))
+    #materials= Material.objects.all()
+    context={"locales":locales}
+    return render(request,"base/local.html", context)
+
+@login_required(login_url="login")
+def local_item(request, pk):
+    local= LocalStore.objects.get(id=pk)
+    context={"local":local}
+    
+    return render(request,"base/local_item.html", context)
+
+@login_required(login_url="login")
+def create_local(request):
+    form = LocalForm()
+    if request.method == "POST":
+        form = LocalForm(request.POST)
+        if form.is_valid():
+            # print (request.POST)
+            form.save()
+            return redirect("local")
+        
+    context={"form":form}
+    return render (request, "base/local_form.html", context)
+
+@login_required(login_url="login")
+def update_local(request, pk):
+    local= LocalStore.objects.get(id=pk)
+    form = LocalForm(instance=material)
+    
+    if request.method == "POST":
+        form = LocalForm(request.POST, instance=local)
+        if form .is_valid():
+            form.save()
+            return redirect("local")
+    context = {'form': form}
+    return render(request, "base/local_form.html", context)
+
+@login_required(login_url="login")
+def delete_local(request, pk):
+    local= LocalStore.objects.get(id=pk)
+    context = {'obj': material}
+    if request.method=="POST":
+        local.delete()
+        return redirect("local")
+    return render(request, "base/slocal_delete.html", context)
+
+
 
 
 

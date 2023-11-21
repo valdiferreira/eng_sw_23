@@ -30,5 +30,11 @@ urlpatterns = [
     path("atualizar-fornecedor/<str:pk>/", views.update_supplier, name="update_supplier"),
     path("remover-fornecedor/<str:pk>/", views.delete_supplier, name="delete_supplier"),
 
+    path("local/<str:pk>/", views.local_item, name="local_item"),
+    path("local/", views.local, name="local"),
+    path("cadastrar-local", views.create_local, name="create_local"),
+    path("atualizar-local/<str:pk>/", views.update_local, name="update_local"),
+    path("remover-local/<str:pk>/", views.delete_local, name="delete_local"),
+
 ]
 
