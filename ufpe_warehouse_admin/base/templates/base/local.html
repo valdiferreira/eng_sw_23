@@ -7,14 +7,14 @@
     <form method = "GET" action = "/material/">
     <input type="text" name="q" placeholder="Busca de Locais..."/>
     </br>
-    <a href="{% url 'material' %}"> Mostrar Todos </a>
+    <a href="{% url 'local' %}"> Mostrar Todos </a>
 </div>
-<a href="{% url 'create_material' %}"> Cadastrar Local </a>
+<a href="{% url 'create_local' %}"> Cadastrar Local </a>
 
 <div>
     {%for local in locales%}
         <div>
-        <a href="/material/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a>
+        <a href="/local/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a>
         <a href="/atualizar-local/{{local.id}}">Edit</a>
         <a href="/remover-local/{{local.id}}">Delete</a>
         </div>
