@@ -36,5 +36,12 @@ urlpatterns = [
     path("atualizar-local/<str:pk>/", views.update_local, name="update_local"),
     path("remover-local/<str:pk>/", views.delete_local, name="delete_local"),
 
+    path("movimentacao/<str:pk>/", views.moviment_item, name="moviment_item"),
+    path("movimentacao/", views.moviment, name="moviment"),
+    path("cadastrar-movimentacao", views.create_moviment, name="create_moviment"),
+    path("atualizar-movimentacao/<str:pk>/", views.update_moviment, name="update_moviment"),
+    path("remover-movimentacao/<str:pk>/", views.delete_moviment, name="delete_moviment"),
+
+
 ]
 

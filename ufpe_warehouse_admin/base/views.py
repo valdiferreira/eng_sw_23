@@ -10,9 +10,12 @@ from django.contrib.auth.decorators import login_required
 from .models import Material
 from .models import Supplier
 from .models import LocalStore
+from .models import Moviment
+
 from .forms import MaterialForm
 from .forms import  SupplierForm
 from .forms import  LocalForm
+from .forms import MovimentForm
 from django.contrib.auth.models import User
 
 
@@ -212,12 +215,58 @@ def delete_local(request, pk):
     if request.method=="POST":
         local.delete()
         return redirect("local")
-    return render(request, "base/slocal_delete.html", context)
+    return render(request, "base/local_delete.html", context)
 
 
+@login_required(login_url="login")
+def moviment(request):
+    q=request.GET.get("q") if request.GET.get("q") != None else ''
+    moviments=Moviment.objects.filter(Q(status__contains=q) | Q(sector__name__contains=q) )
+    moviments= Moviment.objects.all()
+    context={"moviments":moviments}
+    return render(request,"base/moviment.html", context)
 
+@login_required(login_url="login")
+def moviment_item(request, pk):
+    moviments= Moviment.objects.get(id=pk)
+    context={"moviments":moviments}
+    
+    return render(request,"base/moviment_item.html", context)
 
+@login_required(login_url="login")
+def create_moviment(request):
+    form = MovimentForm()
+    if request.method == "POST":
+        form = MovimentForm(request.POST)
+        if form.is_valid():
+            # print (request.POST)
+            form.save()
+            return redirect("moviment")
+        
+    context={"form":form}
+    return render (request, "base/moviment_form.html", context)
 
+@login_required(login_url="login")
+def update_moviment(request, pk):
+    moviment= Moviment.objects.get(id=pk)
+    form = MovimentForm(instance=material)
+    
+    if request.method == "POST":
+        form = MovimentForm(request.POST, instance=moviment)
+        if form .is_valid():
+            form.save()
+            return redirect("moviment")
+    context = {'form': form}
+    return render(request, "base/moviment_form.html", context)
+
+@login_required(login_url="login")
+def delete_moviment(request, pk):
+    moviment= Moviment.objects.get(id=pk)
+    context = {'obj': material}
+    if request.method=="POST":
+        moviment.delete()
+        return redirect("moviment")
+    return render(request, "base/moviment_delete.html", context)
 
 
 

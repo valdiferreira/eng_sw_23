@@ -49,7 +49,7 @@ class LocalStore (models.Model):
     sala = models.CharField(unique=True, max_length=10, null=False)
     section = models.CharField(unique=False, max_length=10, null=True)
     description = models.TextField(unique=False, null=True)
-      
+    
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     

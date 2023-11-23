@@ -1,0 +1,18 @@
+{%extends "main.html"%}
+
+{%block content%}
+
+<h1> Moviment </h1>
+
+<div>
+    <form method = "POST" action = "">
+        {% csrf_token %}
+        {{form.as_p}}
+        
+        <input type="Submit" value= "Submit" />
+    
+    </form>
+
+</div>
+
+{%endblock content%}

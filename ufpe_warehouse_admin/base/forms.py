@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from .models import Material
 from .models import Supplier
 from .models import LocalStore
+from .models import Moviment
 
 
 
@@ -20,4 +21,9 @@ class SupplierForm (ModelForm):
 class LocalForm (ModelForm):
     class Meta:
         model = LocalStore
+        fields = '__all__'
+        
+class MovimentForm (ModelForm):
+    class Meta:
+        model = Moviment
         fields = '__all__'
