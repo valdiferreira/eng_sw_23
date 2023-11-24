@@ -4,7 +4,7 @@
 
 <h1> Movimentações </h1>
 <div>
-    <form method = "GET" action = "/moviment/">
+    <form method = "GET" action = "/movimentacao/">
     <input type="text" name="q" placeholder="Busca de Movimentações..."/>
     </br>
     <a href="{% url 'moviment' %}"> Mostrar Todos </a>
@@ -14,7 +14,7 @@
 <div>
     {%for moviment in moviments%}
         <div>
-        <a href="/movimentacao/{{moviment.id}}">{{moviment.id}} -- {{moviment.material}} -- {{moviment.sector}} -- {{moviment.status}} -- {{moviment.quantity}} </a>
+        <a href="/movimentacao/{{moviment.id}}">{{moviment.id}} -- {{moviment.status}} -- {{moviment.user}} -- {{moviment.supplier}} -- {{moviment.material}} -- {{moviment.quantity}} -- {{moviment.material.measureUnit}} </a>
         <a href="/atualizar-movimentacao/{{moviment.id}}">Edit</a>
         <a href="/remover-movimentacao/{{moviment.id}}">Delete</a>
         </div>

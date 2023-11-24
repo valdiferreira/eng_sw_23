@@ -2,11 +2,19 @@
 
 {%block content%}
 
-<h1> {{material.name}} </h1>
-<div> {{material.description}} </div>
-<div> {{material.measureUnit}} </div>
-<div> {{material.updated}} </div>
+<h1> {{local}} </h1>
 
+
+
+<div>
+    {%for materialquantitystore in materialquantitystores%}
+        <div>
+        <a href="/material/{{material.id}}">{{materialquantitystore.material}} -- {{materialquantitystore.quantity_material}}</a>
+
+        </div>
+    {%endfor%}
+
+</div>
 
 
 {%endblock content%}

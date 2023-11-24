@@ -11,6 +11,7 @@ from .models import Material
 from .models import Supplier
 from .models import LocalStore
 from .models import Moviment
+from .models import MaterialQuantityStore
 
 from .forms import MaterialForm
 from .forms import  SupplierForm
@@ -119,7 +120,7 @@ def supplier(request):
     suppliers= Supplier.objects.filter(
         Q(name__contains=q) |
         Q(description__contains=q))
-    #materials= Material.objects.all()
+    suppliers= Supplier.objects.all()
     context={"suppliers":suppliers}
     return render(request,"base/supplier.html", context)
 
@@ -136,7 +137,7 @@ def create_supplier(request):
     if request.method == "POST":
         form = SupplierForm(request.POST)
         if form.is_valid():
-            # print (request.POST)
+            print (request.POST)
             form.save()
             return redirect("supplier")
         
@@ -165,20 +166,35 @@ def delete_supplier(request, pk):
         return redirect("supplier")
     return render(request, "base/supplier_delete.html", context)
 
+
+# def material(request):
+#     q=request.GET.get("q") if request.GET.get("q") != None else ''
+#     materials= Material.objects.filter(
+#         Q(name__contains=q) |
+#         Q(description__contains=q))
+#     #materials= Material.objects.all()
+#     context={"materials":materials}
+#     return render(request,"base/material.html", context)
+
+
+
 @login_required(login_url="login")
 def local(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
-    locales= LocalStore.objects.filter(
-        Q(sala__contains=q) |
-        Q(section__contains=q))
-    locales= LocalStore.objects.all()
+    locales=LocalStore.objects.filter(
+        Q(sala__contains=q))
+    #locales= LocalStore.objects.all()
     context={"locales":locales}
     return render(request,"base/local.html", context)
+
+
 
 @login_required(login_url="login")
 def local_item(request, pk):
     local= LocalStore.objects.get(id=pk)
-    context={"local":local}
+    materialquantitystores = MaterialQuantityStore.objects.filter(local_store=local)
+
+    context={"local":local, "materialquantitystores":materialquantitystores}
     
     return render(request,"base/local_item.html", context)
 
@@ -222,7 +238,7 @@ def delete_local(request, pk):
 def moviment(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     moviments=Moviment.objects.filter(Q(status__contains=q) | Q(sector__name__contains=q) )
-    moviments= Moviment.objects.all()
+    #moviments= Moviment.objects.all()
     context={"moviments":moviments}
     return render(request,"base/moviment.html", context)
 
@@ -239,9 +255,41 @@ def create_moviment(request):
     if request.method == "POST":
         form = MovimentForm(request.POST)
         if form.is_valid():
-            # print (request.POST)
-            form.save()
-            return redirect("moviment")
+            materialquantitystore = MaterialQuantityStore.objects.filter(material=form.instance.material
+                                              ,local_store=form.instance.local_store )
+           
+            if  form['status'].value() == "saída" and not materialquantitystore:
+                print ("error")
+                return redirect("moviment")
+            
+            if  form['status'].value() == "saída" and materialquantitystore:
+                materialquantitystore = MaterialQuantityStore.objects.get(material=form.instance.material
+                                                  ,local_store=form.instance.local_store )
+                if materialquantitystore.quantity_material < int(form['quantity'].value()):
+                    print ("error")
+                    return redirect("moviment")
+                else:
+                    materialquantitystore.quantity_material=materialquantitystore.quantity_material-int(form['quantity'].value())
+                    materialquantitystore.save()
+                    return redirect("moviment")
+            
+            if  form['status'].value() == "entrada" and materialquantitystore:
+                materialquantitystore = MaterialQuantityStore.objects.get(material=form.instance.material
+                                                  ,local_store=form.instance.local_store)
+                materialquantitystore.quantity_material=materialquantitystore.quantity_material+int(form['quantity'].value())
+                materialquantitystore.save()
+                return redirect("moviment")
+                    
+            if  form['status'].value() == "entrada" and not materialquantitystore:
+                MaterialQuantityStore.objects.create(material=form.instance.material
+                                                  ,local_store=form.instance.local_store,quantity_material=form['quantity'].value())
+                #print (form['material'].value())
+                #print (form.instance.material)
+                obj = form.save(commit=False)
+                obj.user = request.user
+                #print (form)
+                obj.save()
+                return redirect("moviment")
         
     context={"form":form}
     return render (request, "base/moviment_form.html", context)

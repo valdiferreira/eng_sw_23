@@ -21,9 +21,9 @@ class SupplierForm (ModelForm):
 class LocalForm (ModelForm):
     class Meta:
         model = LocalStore
-        fields = '__all__'
+        fields = ["sector", "sala", "section", "description"]
         
 class MovimentForm (ModelForm):
     class Meta:
         model = Moviment
-        fields = '__all__'
+        fields = ["sector","supplier", "local_store", "material", "status", "quantity"]

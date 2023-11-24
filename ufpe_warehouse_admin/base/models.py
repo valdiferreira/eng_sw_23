@@ -53,11 +53,21 @@ class LocalStore (models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
+    materials = models.ManyToManyField(Material, through='MaterialQuantityStore')
     def __str__(self):
         return self.sala
     
+class MaterialQuantityStore(models.Model):
+    material = models.ForeignKey(Material, on_delete=models.RESTRICT)
+    local_store = models.ForeignKey(LocalStore, on_delete=models.RESTRICT)
+    quantity_material = models.IntegerField(null=False, blank=False)  
+    
+    def __str__(self):
+        return self.quantity_material
+
+    
 class Moviment (models.Model):
-    status_choices = [(1,"entrada"),(2,"saída")]
+    status_choices = [("entrada","entrada"),("saída","saída")]
 
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     sector = models.ForeignKey(Sector, on_delete=models.RESTRICT)
@@ -67,6 +77,7 @@ class Moviment (models.Model):
     
     status = models.CharField(unique=False, max_length=10, null=False
                               , choices=status_choices)
+    
     quantity = models.IntegerField(null=False, blank=False)
     
     updated = models.DateTimeField(auto_now=True)
