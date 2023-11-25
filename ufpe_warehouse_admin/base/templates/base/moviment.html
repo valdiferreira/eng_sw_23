@@ -2,24 +2,31 @@
 
 {%block content%}
 
-<h1> Movimentações </h1>
+<h5> Movimentações </h5>
 <div>
     <form method = "GET" action = "/movimentacao/">
     <input type="text" name="q" placeholder="Busca de Movimentações..."/>
-    </br>
     <a href="{% url 'moviment' %}"> Mostrar Todos </a>
-</div>
-<a href="{% url 'create_moviment' %}"> Cadastrar Movimentaçao </a>
+    <br/>
+    <br/>
+    <a href="{% url 'create_moviment' %}"> Cadastrar Movimentaçao </a>
 
-<div>
+
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
     {%for moviment in moviments%}
-        <div>
-        <a href="/movimentacao/{{moviment.id}}">{{moviment.id}} -- {{moviment.status}} -- {{moviment.user}} -- {{moviment.supplier}} -- {{moviment.material}} -- {{moviment.quantity}} -- {{moviment.material.measureUnit}} </a>
-        <a href="/atualizar-movimentacao/{{moviment.id}}">Edit</a>
-        <a href="/remover-movimentacao/{{moviment.id}}">Delete</a>
-        </div>
+      <tr>
+        <td>{{moviment.status}}</td>
+        <td><a href="/movimentacao/{{moviment.id}}">{{moviment.material}}</td>
+        <td>{{moviment.quantity}} -- {{moviment.material.measureUnit}}</td>
+        
+        <td><a href="/atualizar-movimentacao/{{moviment.id}}">Edit</a></td>
+        <td><a href="/remover-movimentacao/{{moviment.id}}">Delete</a></td>
+      </tr>
+    
     {%endfor%}
-
+</table>
 </div>
-
 {%endblock content%}
+
+ 
+   

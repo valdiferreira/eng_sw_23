@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 #from django.http import HttpResponse
 
@@ -317,6 +318,10 @@ def delete_moviment(request, pk):
     return render(request, "base/moviment_delete.html", context)
 
 
+# @login_required(login_url="login")
+# def create_user(request):
+#     form = UserCreationForm()
+#     return render (request, "base/user_form.html", {"form" : form})
 
 
 def view_404(request, exception):
