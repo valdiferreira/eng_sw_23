@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+
 
 #from django.http import HttpResponse
 
@@ -318,11 +318,55 @@ def delete_moviment(request, pk):
     return render(request, "base/moviment_delete.html", context)
 
 
-# @login_required(login_url="login")
-# def create_user(request):
-#     form = UserCreationForm()
-#     return render (request, "base/user_form.html", {"form" : form})
+import plotly.express as px
+from .forms import DateForm
+from .forms import SelectForm
 
+@login_required(login_url="login")
 
+def dashboard(request):
+    
+
+    
+               
+    context = {"form_graph": SelectForm(), "form": DateForm()}
+    return render (request, "base/dashboard.html", context)
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    # if graph:
+    #     if graph=="line":
+    
+    
+    #         start = request.GET.get("start")
+    #         end = request.GET.get("end")
+            
+            
+    #         if start and start <= end:
+    #             moviments=Moviment.objects.filter(created__date__gte=start)
+    #         if end and end >= start:
+    #             moviments=moviments.filter(created__date__lte=end)
+            
+    #         fig = px.line (
+    #             x=[m.created for m in moviments],
+    #             y=[m.quantity for m in moviments],
+    #             title="Entrada de Material",
+    #             labels={"x": "Tempo", "y":"Quantidade"}
+                
+    #         )
+    #         chart = fig.to_html()
+            
+    #         context = {"chart":chart, "form": DateForm()}
+            
+    #         return render (request, "base/dashboard.html", context)
+
+    #return render (request, "base/dashboard.html")
 def view_404(request, exception):
     return render(request, 'base/404.html', status=404)

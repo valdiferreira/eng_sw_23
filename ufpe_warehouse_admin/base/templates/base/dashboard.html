@@ -1,6 +1,8 @@
 {%extends "main.html"%}
 
 {%block content%}
+
+
 <style>
 input[type=text], select {
   width: 100%;
@@ -12,34 +14,31 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
-input[type=submit] {
-  width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
 input[type=submit]:hover {
   background-color: #45a049;
 }
 
-</style>
 
-<h1> Fornecedor </h1>
+</style>
+<h1> Dashboard </h1> 
+
+<form method="GET" action= "{% url 'dashboard' %}">
+  {% csrf_token %}
+  {{ form_graph }}
+</form>
 
 <div>
-    <form method = "POST" action = "">
-        {% csrf_token %}
-        {{form.as_p}}
+    <form method = "GET" action = "{% url 'dashboard' %}">
+       
+        {{ form.as_p }}
         
         <input type="Submit" value= "Submit" />
     
     </form>
+<br>
 
+{{ chart|safe }}
 </div>
 
 {%endblock content%}

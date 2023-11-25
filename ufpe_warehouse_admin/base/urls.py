@@ -42,7 +42,7 @@ urlpatterns = [
     path("atualizar-movimentacao/<str:pk>/", views.update_moviment, name="update_moviment"),
     path("remover-movimentacao/<str:pk>/", views.delete_moviment, name="delete_moviment"),
 
-    
+    path ("dashboard",views.dashboard, name="dashboard"),
     # path("assistencia/<str:pk>/", views.assistent_item, name="assistentitem"),
     # path("assistencia/", views.assistent, name="assistent"),
     # path("cadastrar-assistencia", views.create_assistent, name="create_assistent"),

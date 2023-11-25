@@ -6,7 +6,7 @@ class Material (models.Model):
     
     name = models.CharField(unique=True, max_length=100, null=False)
     
-    description = models.TextField(unique=False, null=True)
+    description = models.CharField(unique=False, max_length=100, null=False)
     measureUnit = models.CharField(unique=False, max_length=30, null=False)
       
     updated = models.DateTimeField(auto_now=True)
@@ -21,7 +21,7 @@ class Material (models.Model):
 
 class Supplier (models.Model):
     name = models.CharField(unique=True, max_length=100, null=False)
-    description = models.TextField(unique=False, null=True)
+    description = models.CharField(unique=False, max_length=100, null=False)
     cnpj = models.CharField(unique=True, max_length=100, null=False)
     
     updated = models.DateTimeField(auto_now=True)
@@ -34,7 +34,7 @@ class Sector (models.Model):
     
     name = models.CharField(unique=True, max_length=100, null=False)
     sigla = models.CharField(unique=False, max_length=20, null=True)
-    description = models.TextField(unique=False, null=True)
+    description = models.CharField(unique=False, max_length=100, null=False)
     user_manager = models.ForeignKey(User, on_delete=models.RESTRICT)
       
     updated = models.DateTimeField(auto_now=True)
@@ -48,7 +48,7 @@ class LocalStore (models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.RESTRICT)
     sala = models.CharField(unique=True, max_length=10, null=False)
     section = models.CharField(unique=False, max_length=10, null=True)
-    description = models.TextField(unique=False, null=True)
+    description = models.CharField(unique=False, max_length=100, null=False)
     
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

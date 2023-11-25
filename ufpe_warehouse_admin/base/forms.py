@@ -6,6 +6,19 @@ from .models import Supplier
 from .models import LocalStore
 from .models import Moviment
 
+from django import forms
+
+class DateForm(forms.Form):
+    start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    end = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+class SelectForm(forms.Form):
+    CHOICES = (('pizza', 'Pizza'),('bar', 'Barra'),('line', 'Linha'))
+    field = forms.ChoiceField(choices=CHOICES, 
+                           widget=forms.Select(attrs={'onchange': 'actionform.submit();'}))
+
+
+
 
 
 class MaterialForm (ModelForm):
