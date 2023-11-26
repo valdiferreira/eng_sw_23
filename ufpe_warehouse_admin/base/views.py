@@ -407,25 +407,38 @@ def report(request):
         moviments=moviments.filter(created__date__gte=start)
     if end and end >= start:
         moviments=moviments.filter(created__date__lte=end)
-    # if status_form:
-    #     moviments=moviments.filter(status=status_form)
-    # if local_form:
-    #     moviments=moviments.filter(local_store=local_form)
+    if status_form:
+        moviments=moviments.filter(status=status_form)
+    if local_form:
+        moviments=moviments.filter(local_store__sala=local_form)
     
     df = read_frame(moviments)
+    if not df.empty:
+        df=df[['status', 'material', 'local_store', 'sector','created']]
+        
+        
+        df['created'] = df['created'].dt.date
+        df.columns = ['status', 'material', 'local', 'setor','data']
+        
+        df = df.to_html(classes='w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white', index=False)
     
+    
+        context = {"form": DateForm(), "table_report":df}
+        return render (request, "base/report.html", context)
+    
+    moviments=Moviment.objects.all()
+    df = read_frame(moviments)
     df=df[['status', 'material', 'local_store', 'sector','created']]
-    
-    
+        
+        
     df['created'] = df['created'].dt.date
     df.columns = ['status', 'material', 'local', 'setor','data']
-    
+        
     df = df.to_html(classes='w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white', index=False)
     
     
     context = {"form": DateForm(), "table_report":df}
     return render (request, "base/report.html", context)
-    
     
     
     
