@@ -310,7 +310,7 @@ def create_moviment(request):
 @login_required(login_url="login")
 def update_moviment(request, pk):
     moviment= Moviment.objects.get(id=pk)
-    form = MovimentForm(instance=material)
+    form = MovimentForm(instance=moviment)
     
     if request.method == "POST":
         form = MovimentForm(request.POST, instance=moviment)
