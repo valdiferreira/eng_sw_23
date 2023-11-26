@@ -2,11 +2,35 @@
 
 {%block content%}
 
-<h1> {{material.name}} </h1>
-<div> {{material.description}} </div>
-<div> {{material.measureUnit}} </div>
-<div> {{material.updated}} </div>
+<h1> {{material.name}} </h1> 
+</br>
+<a href="/atualizar-material/{{material.id}}">Edit</a>
+
+<a href="/remover-material/{{material.id}}">Delete</a>
 
 
+<div>
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+  <tr>
+        
+        <td> Descrição </td><td>{{material.description}}</td>
+       
 
+      </tr>
+        <tr>
+        
+       <td> Unidade de Medida</td> <td>{{material.measureUnit}}</td>
+       
+
+      </tr>
+        <tr>
+        
+        <td> Última Atualização </td><td>{{material.updated}} </td>
+       
+
+      </tr>
+</table>
+
+
+</div>
 {%endblock content%}

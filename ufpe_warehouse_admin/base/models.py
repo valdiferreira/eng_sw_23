@@ -68,7 +68,16 @@ class MaterialQuantityStore(models.Model):
     def __str__(self):
         return self.quantity_material
 
-    
+from django.core.validators import MinValueValidator
+from django.core.validators import ValidationError
+
+def validate_nonzero(value):
+    if value == 0:
+        raise ValidationError(
+            ('Quantidade zero não é permitida'),
+        )
+
+
 class Moviment (models.Model):
     status_choices = [("entrada","entrada"),("saída","saída")]
 
@@ -81,12 +90,12 @@ class Moviment (models.Model):
     status = models.CharField(unique=False, max_length=10, null=False
                               , choices=status_choices)
     
-    quantity = models.IntegerField(null=False, blank=False)
+    quantity = models.PositiveIntegerField(null=False, blank=False, validators=[MinValueValidator(1)])
     
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.status
-    
+
     
     

@@ -49,7 +49,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-container w3-row">
 
     <div class="w3-col s8 w3-bar">
-      <span>Welcome, <strong>Mike</strong></span><br> <a href="{% url 'logout' %}"><strong>Logout</strong></span><br></a>
+      <span>Welcome, <strong>{{ user.get_username }}</strong></span><br> <a href="{% url 'logout' %}"><strong>Logout</strong></span><br></a>
 
     </div>
   </div>
