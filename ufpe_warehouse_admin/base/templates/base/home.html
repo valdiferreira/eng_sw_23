@@ -2,11 +2,11 @@
 
 {%block content%}
 
-<h1> Notificações </h1>
+<h1> Alertas de Estoque </h1>
 <div>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
     <tr>
-    <th></th>
+    <th>Alerta</th>
     <th>Material</th>
     <th>Local</th>
     <th>Quantidade</th>
@@ -15,7 +15,7 @@
       
     <tr>
         <td><a href="/local/{{mqs.local_store.id}}">
-        <i class="fa fa-bell w3-text-red w3-large"></i></a></td>
+        <i class="fa fa-bell w3-text-red w3-large"></i></a> baixo </td>
         
         <td>{{mqs.material}}</td><td>{{mqs.local_store}}</td><td>{{mqs.quantity_material}}</td>
 

@@ -343,16 +343,24 @@ def dashboard(request):
 
     start = request.GET.get("start")
     end = request.GET.get("end")
-    
+    status_form = request.GET.get("status")
+    local_form = request.GET.get("local")
     moviments=Moviment.objects.all()
     if start and start <= end:
         moviments=moviments.filter(created__date__gte=start)
     if end and end >= start:
         moviments=moviments.filter(created__date__lte=end)
+    if status_form:
+        moviments=moviments.filter(status=status_form)
+    if local_form:
+        moviments=moviments.filter(local_store=local_form)
+       
+    df = read_frame(moviments)
     
     fig = px.line (
-        x=[m.created for m in moviments],
-        y=[m.quantity for m in moviments],
+        df,
+        x="created",
+        y="quantity",
         title="Entrada de Material",
         labels={"x": "Tempo", "y":"Quantidade"}
         
@@ -389,21 +397,29 @@ def dashboard(request):
 
 def report(request):
     
+    
     start = request.GET.get("start")
     end = request.GET.get("end")
-    
+    status_form = request.GET.get("status")
+    local_form = request.GET.get("local")
     moviments=Moviment.objects.all()
     if start and start <= end:
         moviments=moviments.filter(created__date__gte=start)
     if end and end >= start:
         moviments=moviments.filter(created__date__lte=end)
-    
+    # if status_form:
+    #     moviments=moviments.filter(status=status_form)
+    # if local_form:
+    #     moviments=moviments.filter(local_store=local_form)
     
     df = read_frame(moviments)
     
     df=df[['status', 'material', 'local_store', 'sector','created']]
     
+    
     df['created'] = df['created'].dt.date
+    df.columns = ['status', 'material', 'local', 'setor','data']
+    
     df = df.to_html(classes='w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white', index=False)
     
     

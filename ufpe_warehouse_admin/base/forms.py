@@ -12,8 +12,20 @@ from .models import Moviment
 from django import forms
 
 class DateForm(forms.Form):
-    start = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    end = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    end = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    status = forms.ModelChoiceField(
+        queryset=Moviment.objects.values_list("status", flat=True).distinct(),
+        to_field_name='status',
+        required=False,  
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    local = forms.ModelChoiceField(
+        queryset=LocalStore.objects.values_list("sala", flat=True).distinct(),
+        to_field_name='sala',
+        required=False,  
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 
 
