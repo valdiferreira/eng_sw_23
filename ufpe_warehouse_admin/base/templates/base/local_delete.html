@@ -2,12 +2,12 @@
 
 {%block content%}
 
-<h1> Local </h1>
+<h1> {{obj}} {{obj.sector}} </h1>
 
 <div>
     <form method = "POST" action = "">
         {% csrf_token %}
-        <p> Tem certeza que deseja excluir "{{obj}}"?</p>
+        <p> Tem certeza que deseja excluir local "{{obj}}" "{{obj.sector}}"?</p>
         <a href="{{request.META.HTTP_REFERER}}">Voltar</a>
         <input type="submit" value="Confirm" />
       

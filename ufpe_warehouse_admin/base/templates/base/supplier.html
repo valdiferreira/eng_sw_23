@@ -4,22 +4,31 @@
 
 <h1> Fornecedor </h1>
 <div>
-    <form method = "GET" action = "/supplier/">
+    <form method = "GET" action = "/fornecedor/">
     <input type="text" name="q" placeholder="Busca de Fornecedor..."/>
-    </br>
     <a href="{% url 'supplier' %}"> Mostrar Todos </a>
+    </br>
+    </br>
+    
 </div>
-<a href="{% url 'create_supplier' %}"> Cadastrar Fornecedor  </a>
 
 <div>
-    {%for supplier in suppliers%}
-        <div>
-        <a href="/supplier/{{supplier.id}}">{{supplier.id}}-- {{supplier.name}}</a>
-        <a href="/atualizar-supplier/{{supplier.id}}">Edit</a>
-        <a href="/remover-supplier/{{supplier.id}}">Delete</a>
-        </div>
-    {%endfor%}
+<button>
+<a href="{% url 'create_supplier' %}"> Cadastrar Fornecedor  </a>
+</button>
+</div>
+</br>
 
+<div>
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+    {%for supplier in suppliers%}
+      <tr>
+        <td><a href="/fornecedor/{{supplier.id}}">{{supplier.name}}</td>
+        <td><a href="/atualizar-fornecedor/{{supplier.id}}">Edit</a></td>
+        <td><a href="/remover-fornecedor/{{supplier.id}}">Delete</a></td>
+      </tr>
+    {%endfor%}
+</table>
 </div>
 
 {%endblock content%}

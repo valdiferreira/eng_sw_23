@@ -2,16 +2,22 @@
 
 {%block content%}
 
-<h5> Movimentações </h5>
+<h1> Movimentações </h1>
 <div>
     <form method = "GET" action = "/movimentacao/">
     <input type="text" name="q" placeholder="Busca de Movimentações..."/>
     <a href="{% url 'moviment' %}"> Mostrar Todos </a>
     <br/>
     <br/>
+</div>
+    
+<div>
+<button>
     <a href="{% url 'create_moviment' %}"> Cadastrar Movimentaçao </a>
-
-
+</button>
+</div>
+</br>
+<div>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
     {%for moviment in moviments%}
       <tr>

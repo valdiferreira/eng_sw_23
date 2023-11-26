@@ -2,24 +2,36 @@
 
 {%block content%}
 
-<h1> Local de Armazenamento </h1>
+<h1> Local de Armazenamento</h1>
 <div>
     <form method = "GET" action = "/local/">
     <input type="text" name="q" placeholder="Busca de Locais..."/>
-    </br>
+    
     <a href="{% url 'local' %}"> Mostrar Todos </a>
+    </br>
+    </br>
+    
 </div>
-<a href="{% url 'create_local' %}"> Cadastrar Local </a>
+<div>
+<button>
+<a href="{% url 'create_local' %}">Cadastrar Local</a>
+</button>
+</div>
+    </br>
+
 
 <div>
-    {%for local in locales%}
-        <div>
-        <a href="/local/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a>
-        <a href="/atualizar-local/{{local.id}}">Edit</a>
-        <a href="/remover-local/{{local.id}}">Delete</a>
-        </div>
-    {%endfor%}
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
 
+    {%for local in locales%}
+         <tr>
+            <td><a href="/local/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a></td>
+            <td><a href="/atualizar-local/{{local.id}}">Edit</a></td>
+            <td><a href="/remover-local/{{local.id}}">Delete</a></td>
+        </tr>
+        
+    {%endfor%}
+</table>
 </div>
 
 {%endblock content%}

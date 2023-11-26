@@ -2,23 +2,30 @@
 
 {%block content%}
 
-<h1> material </h1>
+<h1> Material </h1>
 <div>
     <form method = "GET" action = "/material/">
     <input type="text" name="q" placeholder="Busca de Material..."/>
  
     <a href="{% url 'material' %}"> Mostrar Todos </a>
-    <br/>
-    <br/>
+    </br>
+    </br>
+    
+<div>
+<button>
 <a href="{% url 'create_material' %}"> Cadastrar Material </a>
+</button>
+</div>
 
+    </br>
+<div>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
     {%for material in materials%}
         <tr>
             <td><a href="/material/{{material.id}}">{{material.id}} -- {{material.name}}</a></td>
             <td><a href="/atualizar-material/{{material.id}}">Edit</a></td>
             <td><a href="/remover-material/{{material.id}}">Delete</a></td>
-        <tr>
+        </tr>
     {%endfor%}
 </table> 
 </div>

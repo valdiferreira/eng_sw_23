@@ -113,13 +113,25 @@ def delete_material(request, pk):
         return redirect("material")
     return render(request, "base/material_delete.html", context)
 
+
+# def material(request):
+#     q=request.GET.get("q") if request.GET.get("q") != None else ''
+#     materials= Material.objects.filter(
+#         Q(name__contains=q) |
+#         Q(description__contains=q))
+#     #materials= Material.objects.all()
+#     context={"materials":materials}
+#     return render(request,"base/material.html", context)
+
+
+
 @login_required(login_url="login")
 def supplier(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     suppliers= Supplier.objects.filter(
         Q(name__contains=q) |
         Q(description__contains=q))
-    suppliers= Supplier.objects.all()
+    #suppliers= Supplier.objects.all()
     context={"suppliers":suppliers}
     return render(request,"base/supplier.html", context)
 
@@ -146,7 +158,7 @@ def create_supplier(request):
 @login_required(login_url="login")
 def update_supplier(request, pk):
     supplier= Supplier.objects.get(id=pk)
-    form = SupplierForm(instance=material)
+    form = SupplierForm(instance=supplier)
     
     if request.method == "POST":
         form = SupplierForm(request.POST, instance=supplier)
@@ -159,7 +171,7 @@ def update_supplier(request, pk):
 @login_required(login_url="login")
 def delete_supplier(request, pk):
     supplier= Supplier.objects.get(id=pk)
-    context = {'obj': material}
+    context = {'obj':supplier}
     if request.method=="POST":
         supplier.delete()
         return redirect("supplier")
@@ -226,7 +238,7 @@ def update_local(request, pk):
 @login_required(login_url="login")
 def delete_local(request, pk):
     local= LocalStore.objects.get(id=pk)
-    context = {'obj': material}
+    context = {'obj': local}
     if request.method=="POST":
         local.delete()
         return redirect("local")
