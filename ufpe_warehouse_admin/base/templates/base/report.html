@@ -2,11 +2,39 @@
 
 {%block content%}
 
+
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+input[type=submit]:hover {
+  background-color: #00CB68;
+}
+input[type=button]:hover {
+  background-color: #00A6CB ;
+}
+
+#printableArea {
+    padding:20px;
+}
+</style>
+
 <script>
 
 
 function printDiv(divId) {
-     var printContents = document.getElementById(divId).innerHTML;
+     var printContents = document.getElementById("header").innerHTML + "<br><br><br><br>" + document.getElementById(divId).innerHTML; 
+     
+
+     
      var originalContents = document.body.innerHTML;
 
      document.body.innerHTML = printContents;
@@ -21,14 +49,15 @@ function printDiv(divId) {
 
 <h1> Relatório </h1>
 
-    
 <form method = "GET" action = "{% url 'report' %}">
    
     {{ form.as_p }}
     
-    <input type="Submit" value= "Submit" />
+<input type="Submit" value= "Submit" />
 
-<div id="printableArea" class="float-container">
+<input type="button" onclick="printDiv('printableArea')" value="Imprimir" />
+        
+<div id="printableArea">
 
              {{ table_report|safe }}
             
