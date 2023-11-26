@@ -6,6 +6,9 @@ from .models import Supplier
 from .models import LocalStore
 from .models import Moviment
 
+
+
+
 from django import forms
 
 class DateForm(forms.Form):
@@ -20,7 +23,11 @@ class MaterialForm (ModelForm):
         model = Material
         fields = '__all__'
 
+
+from localflavor.br.forms import BRCNPJField
+
 class SupplierForm (ModelForm):
+    cnpj = BRCNPJField(label=u'CNPJ')
     class Meta:
         model = Supplier
         fields = '__all__'

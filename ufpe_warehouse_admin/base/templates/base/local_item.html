@@ -4,17 +4,30 @@
 
 <h1> {{local.sector}} {{local}} </h1>
 
-
-
 <div>
-    {%for materialquantitystore in materialquantitystores%}
-        <div>
-        <a href="/material/{{material.id}}">{{materialquantitystore.material}} -- {{materialquantitystore.quantity_material}}</a>
 
-        </div>
-    {%endfor%}
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+    <tr>
+    <th>Material</th>
+    <th>Quantidade</th>
+    </tr>
+    
+    {% for materialquantitystore in materialquantitystores %}
+      
+    <tr>
+        
+        <td><a href="/material/{{material.id}}">{{materialquantitystore.material}}</td>
+        <td>{{materialquantitystore.quantity_material}}</td>
 
+      </tr>
+
+      {% endfor %}
+</table>
 </div>
+
+
+
+
 
 
 {%endblock content%}

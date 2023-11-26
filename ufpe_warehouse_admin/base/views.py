@@ -50,10 +50,6 @@ def logout_user(request):
     logout(request)
     return redirect ("login")
 
-@login_required(login_url="login")
-def home(request):
-    return render(request,"base/home.html")
-
 
 @login_required(login_url="login")
 def local_stores (request):
@@ -112,16 +108,6 @@ def delete_material(request, pk):
         material.delete()
         return redirect("material")
     return render(request, "base/material_delete.html", context)
-
-
-# def material(request):
-#     q=request.GET.get("q") if request.GET.get("q") != None else ''
-#     materials= Material.objects.filter(
-#         Q(name__contains=q) |
-#         Q(description__contains=q))
-#     #materials= Material.objects.all()
-#     context={"materials":materials}
-#     return render(request,"base/material.html", context)
 
 
 
@@ -197,6 +183,13 @@ def local(request):
     #locales= LocalStore.objects.all()
     context={"locales":locales}
     return render(request,"base/local.html", context)
+
+@login_required(login_url="login")
+def home(request):
+    
+    materialquantitystores = MaterialQuantityStore.objects.filter(quantity_material__lte=30)
+    context={"materialquantitystores":materialquantitystores}
+    return render(request,"base/home.html", context)
 
 
 
