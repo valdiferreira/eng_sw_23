@@ -1,31 +1,108 @@
 
 {% load static %}
-<img src="{% static 'ufpe.png' %}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+ 
+}
+.all{
+     width: 50%;
+     margin:50px auto;
+     
+}
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
-<h1> Login </h1>
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
 
-    <form method = "POST" action = "">
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+  
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="all">
+
+<form method = "POST" action = "">
+
         {% csrf_token %}
-        
-        
+  <div class="imgcontainer">
+    <img src="{% static 'ufpe.png' %}" />
+
+  </div>
+<h1 align="center" > Sistema de Almoxarifado </h1>
+  <div class="container">
         <label>Usuário:</label>
         <input type="text" name="username" placeholder="Login Usuário" />
       
         <label>Senha:</label>
         <input type="password"  name="password" placeholder="Digite sua senha" />
         
-        <input type="Submit" value= "Login" />
-        
-    </form>
-    
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <button type="submit">Login</button>
 
+</form>
 </div>
-
+</body>
