@@ -54,8 +54,6 @@ def logout_user(request):
 def home(request):
     return render(request,"base/home.html")
 
-def report (request):
-    return render(request)
 
 @login_required(login_url="login")
 def local_stores (request):
@@ -259,27 +257,36 @@ def create_moviment(request):
             materialquantitystore = MaterialQuantityStore.objects.filter(material=form.instance.material
                                               ,local_store=form.instance.local_store )
            
+           #ok
             if  form['status'].value() == "saída" and not materialquantitystore:
                 print ("error")
                 return redirect("moviment")
-            
+            #ok
             if  form['status'].value() == "saída" and materialquantitystore:
                 materialquantitystore = MaterialQuantityStore.objects.get(material=form.instance.material
                                                   ,local_store=form.instance.local_store )
+                #ok
                 if materialquantitystore.quantity_material < int(form['quantity'].value()):
                     print ("error")
-                    return redirect("moviment")
+                
+                #ok
                 else:
                     materialquantitystore.quantity_material=materialquantitystore.quantity_material-int(form['quantity'].value())
                     materialquantitystore.save()
-                    return redirect("moviment")
+                    obj = form.save(commit=False)
+                    obj.user = request.user
+                     #print (form)
+                    obj.save()
             
             if  form['status'].value() == "entrada" and materialquantitystore:
                 materialquantitystore = MaterialQuantityStore.objects.get(material=form.instance.material
                                                   ,local_store=form.instance.local_store)
                 materialquantitystore.quantity_material=materialquantitystore.quantity_material+int(form['quantity'].value())
                 materialquantitystore.save()
-                return redirect("moviment")
+                obj = form.save(commit=False)
+                obj.user = request.user
+                #print (form)
+                obj.save()
                     
             if  form['status'].value() == "entrada" and not materialquantitystore:
                 MaterialQuantityStore.objects.create(material=form.instance.material
@@ -290,7 +297,7 @@ def create_moviment(request):
                 obj.user = request.user
                 #print (form)
                 obj.save()
-                return redirect("moviment")
+                
         
     context={"form":form}
     return render (request, "base/moviment_form.html", context)
@@ -320,19 +327,83 @@ def delete_moviment(request, pk):
 
 import plotly.express as px
 from .forms import DateForm
-from .forms import SelectForm
+from django_pandas.io import read_frame
+
+
 
 @login_required(login_url="login")
 
 def dashboard(request):
     
 
+    start = request.GET.get("start")
+    end = request.GET.get("end")
     
-               
-    context = {"form_graph": SelectForm(), "form": DateForm()}
+    moviments=Moviment.objects.all()
+    if start and start <= end:
+        moviments=moviments.filter(created__date__gte=start)
+    if end and end >= start:
+        moviments=moviments.filter(created__date__lte=end)
+    
+    fig = px.line (
+        x=[m.created for m in moviments],
+        y=[m.quantity for m in moviments],
+        title="Entrada de Material",
+        labels={"x": "Tempo", "y":"Quantidade"}
+        
+    )
+    
+    chart = fig.to_html()
+    
+    
+    df = read_frame(moviments)
+    
+    fig = px.pie(
+        df,
+        values="quantity",
+        names="material",
+        title="Distribuição de Material",
+        labels={"x": "Tempo", "y":"Quantidade"}
+        )
+    
+    chart_pie = fig.to_html()
+    
+    fig = px.bar(df, x='material', y='quantity', barmode="group", 
+             hover_data=['sector'], color='status',
+             labels={'mat':'Material por entrada/saída'}
+             )
+    
+    chart_bar = fig.to_html()
+    
+    context = {"chart":chart, "form": DateForm(), "chart_bar":chart_bar, "chart_pie":chart_pie}
+    
     return render (request, "base/dashboard.html", context)
+
+
+@login_required(login_url="login")
+
+def report(request):
+    
+    start = request.GET.get("start")
+    end = request.GET.get("end")
+    
+    moviments=Moviment.objects.all()
+    if start and start <= end:
+        moviments=moviments.filter(created__date__gte=start)
+    if end and end >= start:
+        moviments=moviments.filter(created__date__lte=end)
     
     
+    df = read_frame(moviments)
+    
+    df=df[['status', 'material', 'local_store', 'sector','created']]
+    
+    df['created'] = df['created'].dt.date
+    df = df.to_html(classes='w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white', index=False)
+    
+    
+    context = {"form": DateForm(), "table_report":df}
+    return render (request, "base/report.html", context)
     
     
     

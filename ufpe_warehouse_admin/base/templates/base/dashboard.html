@@ -18,27 +18,53 @@ input[type=text], select {
 input[type=submit]:hover {
   background-color: #45a049;
 }
+.float-container {
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+
+}  
+
+.float-child_big {
+    width: 100%;
+    float: left;
+    padding: 20px;
+
+} 
 
 
 </style>
 <h1> Dashboard </h1> 
 
+<!-- 
 <form method="GET" action= "{% url 'dashboard' %}">
   {% csrf_token %}
   {{ form_graph }}
 </form>
-
-<div>
-    <form method = "GET" action = "{% url 'dashboard' %}">
-       
-        {{ form.as_p }}
-        
-        <input type="Submit" value= "Submit" />
+-->
+<div class="float-container">
     
-    </form>
-<br>
-
-{{ chart|safe }}
-</div>
+        <form method = "GET" action = "{% url 'dashboard' %}">
+           
+            {{ form.as_p }}
+            
+            <input type="Submit" value= "Submit" />
+        
+        </form>
+    <div class="float-child">
+        {{ chart|safe }}
+    </div> 
+    <div class="float-child">
+        {{ chart_pie|safe }}
+    </div>
+    <div class="float-child_big">
+        {{ chart_bar|safe }}
+    </div>
+</div> 
+     
 
 {%endblock content%}

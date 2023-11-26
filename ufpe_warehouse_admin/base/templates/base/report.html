@@ -1,8 +1,40 @@
-{%extends "main.html"}
+{%extends "main.html" %}
 
 {%block content%}
 
-<h1> report </h1>
+<script>
+
+
+function printDiv(divId) {
+     var printContents = document.getElementById(divId).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+
+
+</script>
+
+<h1> Relatório </h1>
+
+    
+<form method = "GET" action = "{% url 'report' %}">
+   
+    {{ form.as_p }}
+    
+    <input type="Submit" value= "Submit" />
+
+<div id="printableArea" class="float-container">
+
+             {{ table_report|safe }}
+            
+</div> 
+<br>
+<input type="button" onclick="printDiv('printableArea')" value="Imprimir" />
 
 
 {%endblock content%}

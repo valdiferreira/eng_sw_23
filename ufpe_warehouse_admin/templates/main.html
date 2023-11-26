@@ -34,7 +34,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- Top container -->
 
 <!-- Top container -->
-<div class="w3-bar w3-top w3-light-grey w3-large" style="z-index:4">
+<div id="header" class="w3-bar w3-top w3-light-grey w3-large" style="z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
   <span class="w3-bar-item w3-right"><a href="{% url 'home' %}"> <img src="{% static 'ufpe.png' %}" /></span></a>
 </div>
@@ -81,7 +81,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-row-padding w3-margin-bottom">
   
     <div class="w3-quarter">
-    <a href="{% url 'dashboard' %}">
+    <a href="{% url 'report' %}">
       <div class="w3-container w3-red w3-padding-16">
         <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
         <div class="w3-right">

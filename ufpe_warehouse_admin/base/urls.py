@@ -43,6 +43,7 @@ urlpatterns = [
     path("remover-movimentacao/<str:pk>/", views.delete_moviment, name="delete_moviment"),
 
     path ("dashboard",views.dashboard, name="dashboard"),
+    path ("relatório",views.report, name="report"),
     # path("assistencia/<str:pk>/", views.assistent_item, name="assistentitem"),
     # path("assistencia/", views.assistent, name="assistent"),
     # path("cadastrar-assistencia", views.create_assistent, name="create_assistent"),
