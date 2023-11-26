@@ -353,7 +353,7 @@ def dashboard(request):
     if status_form:
         moviments=moviments.filter(status=status_form)
     if local_form:
-        moviments=moviments.filter(local_store=local_form)
+        moviments=moviments.filter(local_store__sala=local_form)
        
     df = read_frame(moviments)
     
@@ -368,8 +368,7 @@ def dashboard(request):
     
     chart = fig.to_html()
     
-    
-    df = read_frame(moviments)
+
     
     fig = px.pie(
         df,
