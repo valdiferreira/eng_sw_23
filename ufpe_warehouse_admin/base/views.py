@@ -222,7 +222,7 @@ def update_local(request, pk):
     
     if request.method == "POST":
         form = LocalForm(request.POST, instance=local)
-        if form .is_valid():
+        if form.is_valid():
             form.save()
             return redirect("local")
     context = {'form': form}
@@ -314,7 +314,7 @@ def update_moviment(request, pk):
     
     if request.method == "POST":
         form = MovimentForm(request.POST, instance=moviment)
-        if form .is_valid():
+        if form.is_valid():
             form.save()
             return redirect("moviment")
     context = {'form': form}
@@ -340,7 +340,7 @@ from django_pandas.io import read_frame
 
 def dashboard(request):
     
-
+   
     start = request.GET.get("start")
     end = request.GET.get("end")
     status_form = request.GET.get("status")
@@ -402,6 +402,7 @@ def report(request):
     status_form = request.GET.get("status")
     local_form = request.GET.get("local")
     moviments=Moviment.objects.all()
+    
     if start and start <= end:
         moviments=moviments.filter(created__date__gte=start)
     if end and end >= start:
@@ -444,33 +445,6 @@ def report(request):
     
     
 
-    
-    # if graph:
-    #     if graph=="line":
-    
-    
-    #         start = request.GET.get("start")
-    #         end = request.GET.get("end")
-            
-            
-    #         if start and start <= end:
-    #             moviments=Moviment.objects.filter(created__date__gte=start)
-    #         if end and end >= start:
-    #             moviments=moviments.filter(created__date__lte=end)
-            
-    #         fig = px.line (
-    #             x=[m.created for m in moviments],
-    #             y=[m.quantity for m in moviments],
-    #             title="Entrada de Material",
-    #             labels={"x": "Tempo", "y":"Quantidade"}
-                
-    #         )
-    #         chart = fig.to_html()
-            
-    #         context = {"chart":chart, "form": DateForm()}
-            
-    #         return render (request, "base/dashboard.html", context)
 
-    #return render (request, "base/dashboard.html")
 def view_404(request, exception):
     return render(request, 'base/404.html', status=404)

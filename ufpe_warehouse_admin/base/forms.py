@@ -6,14 +6,15 @@ from .models import Supplier
 from .models import LocalStore
 from .models import Moviment
 
-
+from django.core.exceptions import ValidationError
 
 
 from django import forms
 
 class DateForm(forms.Form):
-    start = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
-    end = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    start = forms.DateField(label="Início", required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    end = forms.DateField(label="Fim",required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    
     status = forms.ModelChoiceField(
         queryset=Moviment.objects.values_list("status", flat=True).distinct(),
         to_field_name='status',
@@ -26,8 +27,16 @@ class DateForm(forms.Form):
         required=False,  
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+   
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start")
+        end_date = cleaned_data.get("end")
+        if  start_date > end_date:
+            raise ValidationError("End date should be greater than start date.")
+      
 
-
+        return self.cleaned_data
 
 
 class MaterialForm (ModelForm):
