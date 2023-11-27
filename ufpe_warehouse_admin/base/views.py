@@ -241,7 +241,13 @@ def delete_local(request, pk):
 @login_required(login_url="login")
 def moviment(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
-    moviments=Moviment.objects.filter(Q(status__contains=q) | Q(sector__name__contains=q) )
+    moviments=Moviment.objects.filter(
+        Q(status__contains=q) | 
+        Q(material__name__contains=q) |
+        Q(material__description__contains=q) |
+        Q(local_store__sala__contains=q) |
+        Q(created__date__contains=q)
+         )
     #moviments= Moviment.objects.all()
     context={"moviments":moviments}
     return render(request,"base/moviment.html", context)

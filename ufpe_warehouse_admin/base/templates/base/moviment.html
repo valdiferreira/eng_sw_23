@@ -19,12 +19,20 @@
 </br>
 <div>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+    <tr>
+    <th>Status</th>
+    <th>Material</th>
+    <th>Quantidade</th>
+    <th>Local</th>
+    <th>Data</th>
+    </tr>
     {%for moviment in moviments%}
       <tr>
         <td>{{moviment.status}}</td>
         <td><a href="/material/{{moviment.material.id}}">{{moviment.material}}</td>
         <td>{{moviment.quantity}} -- {{moviment.material.measureUnit}}</td>
-        
+        <td>{{moviment.local_store}}</td>
+        <td>{{moviment.created.date}}</td>
         <td><a href="/atualizar-movimentacao/{{moviment.id}}">Edit</a></td>
         <td><a href="/remover-movimentacao/{{moviment.id}}">Delete</a></td>
       </tr>
