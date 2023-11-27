@@ -22,10 +22,16 @@
 
 <div>
 <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+    <tr>
+
+    <th>Local</th>
+ 
+    </tr>
+
 
     {%for local in locales%}
          <tr>
-            <td><a href="/local/{{local.id}}">{{local.id}} -- {{local.sala}} -- {{local.sector}}</a></td>
+            <td><a href="/local/{{local.id}}">{{local.sala}} -- {{local.sector}}</a></td>
             <td><a href="/atualizar-local/{{local.id}}">Edit</a></td>
             <td><a href="/remover-local/{{local.id}}">Delete</a></td>
         </tr>

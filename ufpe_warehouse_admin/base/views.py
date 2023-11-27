@@ -368,7 +368,7 @@ def dashboard(request):
         x="created",
         y="quantity",
         title="Entrada de Material",
-        labels={"x": "Tempo", "y":"Quantidade"}
+        labels={"created": "Tempo", "quantity":"Quantidade"}
         
     )
     
@@ -381,14 +381,16 @@ def dashboard(request):
         values="quantity",
         names="material",
         title="Distribuição de Material",
-        labels={"x": "Tempo", "y":"Quantidade"}
+        labels={"material": "Material", "quantity":"Quantidade"}
         )
     
     chart_pie = fig.to_html()
     
     fig = px.bar(df, x='material', y='quantity', barmode="group", 
              hover_data=['sector'], color='status',
-             labels={'mat':'Material por entrada/saída'}
+             
+             title="Distribuição de Material por Status (Entrada/Saída)",
+             labels={"material": "Material", "quantity":"Quantidade"}
              )
     
     chart_bar = fig.to_html()
