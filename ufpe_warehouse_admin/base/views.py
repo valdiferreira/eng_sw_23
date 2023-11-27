@@ -21,7 +21,6 @@ from .forms import MovimentForm
 from django.contrib.auth.models import User
 
 
-
 def login_page(request):
     
     if request.user.is_authenticated:
@@ -110,8 +109,13 @@ def delete_material(request, pk):
     return render(request, "base/material_delete.html", context)
 
 
+from django.contrib.auth.decorators import user_passes_test
+def is_not_staff(user):
+    return user.is_staff
+
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def supplier(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     suppliers= Supplier.objects.filter(
@@ -122,6 +126,7 @@ def supplier(request):
     return render(request,"base/supplier.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def supplier_item(request, pk):
     supplier= Supplier.objects.get(id=pk)
     context={"supplier":supplier}
@@ -129,6 +134,7 @@ def supplier_item(request, pk):
     return render(request,"base/supplier_item.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def create_supplier(request):
     form = SupplierForm()
     if request.method == "POST":
@@ -142,6 +148,7 @@ def create_supplier(request):
     return render (request, "base/supplier_form.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def update_supplier(request, pk):
     supplier= Supplier.objects.get(id=pk)
     form = SupplierForm(instance=supplier)
@@ -155,6 +162,7 @@ def update_supplier(request, pk):
     return render(request, "base/supplier_form.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def delete_supplier(request, pk):
     supplier= Supplier.objects.get(id=pk)
     context = {'obj':supplier}
@@ -176,6 +184,7 @@ def delete_supplier(request, pk):
 
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def local(request):
     q=request.GET.get("q") if request.GET.get("q") != None else ''
     locales=LocalStore.objects.filter(
@@ -194,6 +203,7 @@ def home(request):
 
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def local_item(request, pk):
     local= LocalStore.objects.get(id=pk)
     materialquantitystores = MaterialQuantityStore.objects.filter(local_store=local)
@@ -203,6 +213,7 @@ def local_item(request, pk):
     return render(request,"base/local_item.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def create_local(request):
     form = LocalForm()
     if request.method == "POST":
@@ -216,6 +227,7 @@ def create_local(request):
     return render (request, "base/local_form.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def update_local(request, pk):
     local= LocalStore.objects.get(id=pk)
     form = LocalForm(instance=material)
@@ -229,6 +241,7 @@ def update_local(request, pk):
     return render(request, "base/local_form.html", context)
 
 @login_required(login_url="login")
+@user_passes_test(is_not_staff)
 def delete_local(request, pk):
     local= LocalStore.objects.get(id=pk)
     context = {'obj': local}
