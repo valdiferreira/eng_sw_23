@@ -22,7 +22,7 @@
     {%for moviment in moviments%}
       <tr>
         <td>{{moviment.status}}</td>
-        <td><a href="/movimentacao/{{moviment.id}}">{{moviment.material}}</td>
+        <td><a href="/material/{{moviment.material.id}}">{{moviment.material}}</td>
         <td>{{moviment.quantity}} -- {{moviment.material.measureUnit}}</td>
         
         <td><a href="/atualizar-movimentacao/{{moviment.id}}">Edit</a></td>
